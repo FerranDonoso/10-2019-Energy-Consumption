@@ -14,7 +14,7 @@ con = dbConnect(MySQL(), user = "deepAnalytics", password = "Sqltask1234!",
                 host = "data-analytics-2018.cbrosir2cswx.us-east-1.rds.amazonaws.com")
 
 ## Initial understanding of the data set
-dbListFields(con,"yr_2006")
+dbListFields(con, "yr_2006")
 iu2007 <- dbGetQuery(con, "SELECT * FROM yr_2007")
 View(iu2007)
 which(is.na(iu2007))
@@ -53,7 +53,7 @@ poa07to10dt <- cbind(poa07to10, paste(poa07to10$Date, poa07to10$Time), stringsAs
 colnames(poa07to10dt)[8] <- "DateTime"
 
 ## Move the DateTime attribute within the dataset
-poa07to10dt <- poa07to10dt[,c(ncol(poa07to10dt), 1:(ncol(poa07to10dt)-1))]
+poa07to10dt <- poa07to10dt[, c(ncol(poa07to10dt), 1:(ncol(poa07to10dt)-1))]
 
 ## Convert DateTime from POSIXlt to POSIXct 
 poa07to10dt$DateTime <- as.POSIXct(poa07to10dt$DateTime, "%Y/%m/%d %H:%M:%S")
@@ -342,9 +342,9 @@ training <- energymonth %>% filter(year == 2007 | year == 2008 | year == 2009)
 testing <- energymonth %>% filter(year == 2010)
 
 ## Create TS training and testing energy month 07-10
-trainingTS <- ts(training$Global_active_powerkwh, frequency=12, start=c(2007,1))
+trainingTS <- ts(training$Global_active_powerkwh, frequency = 12, start = c(2007, 1))
 autoplot(trainingTS)
-testingTS <- ts(testing$Global_active_powerkwh, frequency=11, start=c(2010,1))
+testingTS <- ts(testing$Global_active_powerkwh, frequency = 11, start = c(2010, 1))
 autoplot(testingTS)
 
 ## Decompose into trend, seasonal and remainder
@@ -439,7 +439,7 @@ trainingPR$ds <- as.yearmon(paste(trainingPR$year, trainingPR$month, sep = "-"))
 
 trainingPR <- trainingPR[, -c(1:2)]
 
-trainingPR <- trainingPR[, c(2,1)]
+trainingPR <- trainingPR[, c(2, 1)]
 
 colnames(trainingPR)[2] <- "y"
 
